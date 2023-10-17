@@ -32,6 +32,12 @@ import re
 
 
 def format_phone_number(text):
-    # ваше решение:
-
-    return "Fail!"
+    right_number_1 = '+7' + ' ' + re.search('\d{3}', text).group() + ' ' + ' '.join(re.findall('\d{3}[-]\d{2}[-]\d{2}', text))
+    right_number_2 = '+7' + ' ' + re.search('\d{3}', text).group() + ' ' + ' '.join(re.findall('(?<=^.{3})\d{3}', text)) + '-' + ' '.join(re.findall('(?<=^.{6})\d{2}', text)) + '-' + ' '.join(re.findall('(?<=^.{8})\d{2}', text))
+    if (text == ' '.join(re.findall('[+][7]\s\d{3}\s\d{3}[-]\d{2}[-]\d{2}', text))
+       or text == ' '.join(re.findall('[8][(]\d{3}[)]\d{3}[-]\d{2}[-]\d{2}', text))):
+        return right_number_1
+    elif (text == ' '.join(re.findall('\d{10}', text))):
+        return right_number_2
+    else:
+        return "Fail!"

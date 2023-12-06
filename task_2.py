@@ -21,16 +21,16 @@ import re
 
 
 def get_plate_type(plate):
-    if plate == ' '.join(re.findall('[а-я]{1}\d{3}[а-я]{2}\s\d{2}', plate)):
-        return "1А"
-    elif plate == ' '.join(re.findall('[а-я]{2}\d{3}\s\d{2}', plate)):
-        return "1Б"
-    elif plate == ' '.join(re.findall('[а-я]{2}\d{4}\s\d{2}', plate)):
-        return 2
-    elif plate == ' '.join(re.findall('\d{4}[а-я]{2}\s\d{2}', plate)):
-        return 3
+    if plate == ' '.join(re.findall('^[а, в, е, к, м, н, о, р, с, т, у, х]{1}\d{3}[а, в, е, к, м, н, о, р, с, т, у, х]{2}\s\d{2}$', plate)):
+        return '1А'
+    elif plate == ' '.join(re.findall('^[а, в, е, к, м, н, о, р, с, т, у, х]{2}\d{3}\s\d{2}$', plate)):
+        return '1Б'
+    elif plate == ' '.join(re.findall('^[а, в, е, к, м, н, о, р, с, т, у, х]{2}\d{4}\s\d{2}$', plate)):
+        return '2'
+    elif plate == ' '.join(re.findall('^\d{4}[а, в, е, к, м, н, о, р, с, т, у, х]{2}\s\d{2}$', plate)):
+        return '3'
     else:
-        return "Fail!"
+        return 'Fail!'
 
-text = input()
-get_plate_type(text)    
+
+

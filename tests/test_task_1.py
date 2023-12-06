@@ -1,5 +1,6 @@
 import re
 import task_1
+import pytest
 
 
 _TestCase = tuple[str, list[str]]

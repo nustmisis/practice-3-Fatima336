@@ -29,8 +29,8 @@ _REPL_0 = r"\1\1"  # строка замены
 # aZc   ---> a!Z!c
 # aZZc  ---> a!Z!!Z!c
 # aBaCa ---> a!B!a!C!a
-PATTERN_1 = r"(?<=a)([A-Z])"
-REPL_1 = r"!\1!"
+PATTERN_1 = r"([A-Z])"
+REPL_1 = r'!\g<1>!'
 
 
 # abc    ---> abc
@@ -38,7 +38,7 @@ REPL_1 = r"!\1!"
 # azzzc  ---> azc
 # arrrrc ---> arc
 # xxxxxx ---> x
-PATTERN_2 = r"(.)\1+"
+PATTERN_2 = r"(.)\1*"
 REPL_2 = r"\1"
 
 
@@ -47,11 +47,12 @@ REPL_2 = r"\1"
 # this is is is text   ---> this *is* text
 # this is text text    ---> this is *text*
 # this is is text text ---> this *is* *text*
-PATTERN_3 = r"\bis\b(?=(?:\s+\bis\b)+)"
-REPL_3 = r"is"
+PATTERN_3 = r"(\b\w+\b)(\s+\1)+"
+REPL_3 = r"*\1*"
 
-# one two three ---> two one three
-# dog cat wolf  ---> cat dog wolf
-# goose car rat ---> goose rat car
-PATTERN_4 = r"\btext\b(?=(?:\s+\btext\b)+)"
-REPL_4 = r"text"
+# one two three —-> two one three
+# dog cat wolf —-> cat dog wolf
+# goose car rat —-> goose rat car
+
+PATTERN_4 = r"^(\b\w{1,4}\b)\s+(\b\w+\b)(\s+\b\w+\b)?|(\b\w{5,}\b)\s+(\b\w+\b)\s+(\b\w+\b)"
+REPL_4 = lambda m: (m.group(2) + " " + m.group(1) + (m.group(3) if m.group(3) else "")) if m.group(1) else (m.group(4) + " " + m.group(6) + " " + m.group(5))
